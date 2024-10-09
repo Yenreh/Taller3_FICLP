@@ -32,6 +32,9 @@
 ;;                  ::= "evaluar" expresion (expresion *(",") )  finEval
 ;;                      <app-exp  (exp exps)>
 ;;
+;;                  ::= "declarar-recursivo" ({<identificador> = <expresion> ';' }*)) { <expresion> }
+;;                      <variableRecursivo-exp (proc-names idss bodies cuerpo)>
+;;
 ;;  <primitiva-binaria>   ::= + (primitiva-suma)
 ;;                        ::= ~ (primitiva-resta)
 ;;                        ::= / (primitiva-div)
@@ -83,6 +86,7 @@
     (expresion ("declarar" "(" (arbno identificador "=" expresion ";") ")" "{" expresion "}") variableLocal-exp)
     (expresion ("procedimiento" "(" (separated-list identificador ",") ")" "{" expresion "}") procedimiento-exp)
     (expresion ("evaluar" expresion "(" (separated-list expresion ",") ")" "finEval") app-exp)
+    (expresion ("declarar-recursivo" (arbno identificador "(" (separated-list identificador ",") ")" "=" expresion)  "{" expresion "}") variableRecursivo-exp)
 
     ;;Primitiva Binaria
 
@@ -195,6 +199,9 @@
                            (apply-procedure proc args)
                            (eopl:error 'eval-expression
                                        "Attempt to apply non-procedure ~s" proc))))
+      (variableRecursivo-exp (proc-names idss bodies cuerpo)
+        (evaluar-procedimiento cuerpo
+                   (extend-env-recursively proc-names idss bodies env)))
      )
    )
 )
