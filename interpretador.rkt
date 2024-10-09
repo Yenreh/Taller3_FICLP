@@ -51,3 +51,42 @@
   (numero       ("-" digit (arbno digit) "." digit (arbno digit)) number)
  )
 )
+
+;Especificación Sintáctica (gramática)
+
+(define grammar-simple-interpreter
+  '(
+    ;;Programa
+    
+    (programa (expresion) un-programa)
+
+    ;;Expresion
+    
+    (expresion (numero) numero-lit)
+    (expresion (identificador) var-exp)
+    (expresion (texto) text-exp)
+    (expresion ("("expresion primitiva-binaria expresion")") primapp-bin-exp)
+    (expresion (primitiva-unaria "(" expresion ")") primapp-un-exp)
+
+    ;;Primitiva Binaria
+
+    (primitiva-binaria ("+")      primitiva-suma)
+    (primitiva-binaria ("~")      primitiva-resta)
+    (primitiva-binaria ("/")      primitiva-div)
+    (primitiva-binaria ("*")      primitiva-multi)
+    (primitiva-binaria ("concat") primitiva-concat)
+    (primitiva-binaria (">")      primitiva-mayor)
+    (primitiva-binaria ("<")      primitiva-menor)
+    (primitiva-binaria (">=")     primitiva-mayor-igual)
+    (primitiva-binaria ("<=")     primitiva-menor-igual)
+    (primitiva-binaria ("!=")     primitiva-diferente)
+    (primitiva-binaria ("==")     primitiva-comparador-igual)
+
+    ;;Primitiva Unaria
+
+    (primitiva-unaria ("longitud")  primitiva-longitud)
+    (primitiva-unaria ("add1") primitiva-add1)
+    (primitiva-unaria ("sub1") primitiva-sub1)
+    (primitiva-unaria ("neg") primitiva-negacion-booleana)
+  )
+)
