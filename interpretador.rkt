@@ -3,7 +3,7 @@
 ;; La definición BNF para las expresiones del lenguaje:
 ;;
 ;;  <programa>      ::= <expresion>
-;;                      <un-program (exp)>
+;;                      <un-programa (exp)>
 ;;
 ;;  <expresion>     ::= <numero>
 ;;                      <numero-lit (num)>
