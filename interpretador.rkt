@@ -29,6 +29,9 @@
 ;;                  ::= procedimiento (<identificador>*(',') ) "{" <expresion> "}"
 ;;                      <procedimiento-exp (ids cuerpo)>
 ;;
+;;                  ::= "evaluar" expresion (expresion *(",") )  finEval
+;;                      <app-exp  (exp exps)>
+;;
 ;;  <primitiva-binaria>   ::= + (primitiva-suma)
 ;;                        ::= ~ (primitiva-resta)
 ;;                        ::= / (primitiva-div)
@@ -79,6 +82,7 @@
     (expresion ("Si" expresion "{" expresion "}" "sino" "{" expresion "}") condicional-exp)
     (expresion ("declarar" "(" (arbno identificador "=" expresion ";") ")" "{" expresion "}") variableLocal-exp)
     (expresion ("procedimiento" "(" (separated-list identificador ",") ")" "{" expresion "}") procedimiento-exp)
+    (expresion ("evaluar" expresion "(" (separated-list expresion ",") ")" "finEval") app-exp)
 
     ;;Primitiva Binaria
 
@@ -184,6 +188,13 @@
                                         (extend-env ids args env))))
       (procedimiento-exp (ids cuerpo)
             (cerradura ids cuerpo env))
+      (app-exp (exp exps)
+             (let ((proc (evaluar-expresion exp env))
+                           (args (eval-rands exps env)))
+                       (if (procval? proc)
+                           (apply-procedure proc args)
+                           (eopl:error 'eval-expression
+                                       "Attempt to apply non-procedure ~s" proc))))
      )
    )
 )
