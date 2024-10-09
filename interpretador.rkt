@@ -382,9 +382,20 @@
 
 ;****************************************************************************************
 ;Ejercicio a)
-;Escriba un programa en su lenguaje de programación que contenga un procedimiento @sumarDigitos que le permita sumar los dígitos de un número entero positivo.
-;evaluar @sumarDigitos(147) finEval deberá retornar 12
-
+;declarar-recursivo (
+; @modulo(@n, @d) = Si (@n < @d) {
+;    @n
+;  } sino {
+;    evaluar @modulo((@n ~ @d), @d) finEval
+;  };
+;  @sumarDigitos(@n) = Si (@n < 10) {
+;    @n
+;  } sino {
+;    (evaluar @modulo(@n, 10) finEval + evaluar @sumarDigitos(((@n ~  evaluar @modulo(@n, 10) finEval ) / 10)) finEval)
+;  };
+;) {
+;evaluar @sumarDigitos(147) finEval
+;}
 
 ;****************************************************************************************
 ;Ejericio b)
