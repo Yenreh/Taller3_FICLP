@@ -23,6 +23,9 @@
 ;;                  ::= Si <expresion> "{" <expresion> "}" "sino" "{" <expresion> "}"
 ;;                      <condicional-exp (test-exp true-exp false-exp)>
 ;;
+;;                  ::= declarar ({<identificador> = <expresion> ';' }*)) { <expresion> }
+;;                      <variableLocal-exp (ids exps cuerpo)>
+;;
 ;;  <primitiva-binaria>   ::= + (primitiva-suma)
 ;;                        ::= ~ (primitiva-resta)
 ;;                        ::= / (primitiva-div)
@@ -71,6 +74,7 @@
     (expresion ("("expresion primitiva-binaria expresion")") primapp-bin-exp)
     (expresion (primitiva-unaria "(" expresion ")") primapp-un-exp)
     (expresion ("Si" expresion "{" expresion "}" "sino" "{" expresion "}") condicional-exp)
+    (expresion ("declarar" "(" (arbno identificador "=" expresion ";") ")" "{" expresion "}") variableLocal-exp)
 
 
     ;;Primitiva Binaria
@@ -171,6 +175,10 @@
                        (if (eqv? (valor-verdad? (evaluar-expresion test-exp env)) 1)
                            (evaluar-expresion true-exp env)
                            (evaluar-expresion false-exp env)))
+      (variableLocal-exp (ids exps cuerpo)
+         (let ((args (eval-rands exps env)))
+                       (evaluar-expresion cuerpo
+                                        (extend-env ids args env))))
      )
    )
 )
