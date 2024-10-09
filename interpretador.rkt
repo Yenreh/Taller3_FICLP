@@ -447,12 +447,42 @@
 
 ;****************************************************************************************
 ;Ejercicio e)
-;En python se puede utilizar algo que se llaman decoradores (por favor leer aquí).
-;Crea una función @integrantes que muestre los nombres de los integrantes del grupo y adicionalmente crea un decorador que al invocarlo salude a los integrantes
+;ACLARACION: Aqui no incluyo el : del "Hola:" ya que se definio esto en la especificacion de la gramatica
+;"<texto>: Debe definirse para cualquier texto escrito en racket. Un texto en
+  ;este lenguaje son palabras que inician con una o más letras, seguidos de
+  ;posibles números o el guión bajo para separar palabras "_". Defina el texto
+  ;en la especificación léxica sin las comillas y posteriormente escape las
+  ;comillas en la gramática como se muestra arriba.
+
+;Por lo que los dos puntos no se incluyen en la definicion del texto
+
+; declarar (
+;    @integrantes = procedimiento () { "Herney_el_solitario" };
+;    @saludar = procedimiento (@procedimiento) { procedimiento () { ("Hola_" concat evaluar @procedimiento() finEval) } };
+;  ) {
+;  declarar(
+;    @decorate = evaluar @saludar(@integrantes) finEval;
+;  )
+;  {
+;    evaluar @decorate() finEval }
+;  }
 
 ;****************************************************************************************
 ;Ejercicio e)
-;Modifique el ejercicio anterior para que el decorador reciba como parámetro otro mensaje que debe ponerse al final de la cadena de saludo.
+
+;Deberá retornar "Hola_Robinson_y_Sara_ProfesoresFLP"
+;
+
+;  declarar (
+;    @integrantes = procedimiento () { "Herney_el_solitario" };
+;    @saludar = procedimiento (@procedimiento) { procedimiento () { ("Hola_" concat evaluar @procedimiento() finEval) } };
+;  ) {
+;  declarar-recursivo(
+;    @decorate(@mensaje) = (evaluar evaluar @saludar(@integrantes) finEval () finEval  concat @mensaje) ;
+;  )
+;  {
+;    evaluar @decorate("ProfesoresFLP") finEval }
+;  }
 
 ;****************************************************************************************
 
