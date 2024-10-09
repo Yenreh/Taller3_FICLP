@@ -2,5 +2,4 @@
 .idea/
 .idea/*
 *.bak
-.rkt#*
 /#interpretador.*
