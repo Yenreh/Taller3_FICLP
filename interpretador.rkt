@@ -37,3 +37,17 @@
 ;;                       ::= sub1(primitiva-sub1)
 ;;                       ::= neg(primitiva-negacion-booleana)
 ;******************************************************************************************
+;Especificación Léxica
+
+(define scanner-spec-simple-interpreter
+'(
+  (espacios   (whitespace) skip)
+  (comentario     ("%" (arbno (not #\newline))) skip)
+  (identificador  ("@" letter (arbno (or letter digit))) symbol)
+  (texto        ("\"" letter (arbno (or letter digit "_")) "\"") string)
+  (numero       (digit (arbno digit)) number)
+  (numero       ("-" digit (arbno digit)) number)
+  (numero       (digit (arbno digit) "." digit (arbno digit)) number)
+  (numero       ("-" digit (arbno digit) "." digit (arbno digit)) number)
+ )
+)
