@@ -26,6 +26,9 @@
 ;;                  ::= declarar ({<identificador> = <expresion> ';' }*)) { <expresion> }
 ;;                      <variableLocal-exp (ids exps cuerpo)>
 ;;
+;;                  ::= procedimiento (<identificador>*(',') ) "{" <expresion> "}"
+;;                      <procedimiento-exp (ids cuerpo)>
+;;
 ;;  <primitiva-binaria>   ::= + (primitiva-suma)
 ;;                        ::= ~ (primitiva-resta)
 ;;                        ::= / (primitiva-div)
@@ -75,7 +78,7 @@
     (expresion (primitiva-unaria "(" expresion ")") primapp-un-exp)
     (expresion ("Si" expresion "{" expresion "}" "sino" "{" expresion "}") condicional-exp)
     (expresion ("declarar" "(" (arbno identificador "=" expresion ";") ")" "{" expresion "}") variableLocal-exp)
-
+    (expresion ("procedimiento" "(" (separated-list identificador ",") ")" "{" expresion "}") procedimiento-exp)
 
     ;;Primitiva Binaria
 
@@ -179,6 +182,8 @@
          (let ((args (eval-rands exps env)))
                        (evaluar-expresion cuerpo
                                         (extend-env ids args env))))
+      (procedimiento-exp (ids cuerpo)
+            (cerradura ids cuerpo env))
      )
    )
 )
@@ -256,7 +261,7 @@
   (cerradura
    (lista-ID (list-of symbol?))
    (exp expresion?)
-   (amb environment?)))
+   (amb ambiente?)))
 
 ;apply-procedure:
 ;evalua el cuerpo de un procedimientos en el ambiente extendido correspondiente
@@ -271,16 +276,16 @@
 ;Ambientes
 
 ;definición del tipo de dato ambiente
-(define-datatype environment environment?
+(define-datatype environment ambiente?
   (empty-env-record)
   (extended-env-record (syms (list-of symbol?))
                        (vals (list-of scheme-value?))
-                       (env environment?)
+                       (env ambiente?)
   )
   (recursively-extended-env-record (proc-names (list-of symbol?))
                                    (idss (list-of (list-of symbol?)))
                                    (bodies (list-of expresion?))
-                                   (env environment?)
+                                   (env ambiente?)
   )
 )
 
