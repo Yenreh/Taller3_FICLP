@@ -434,8 +434,6 @@
 
 ;****************************************************************************************
 ;Ejercicio d)
-;Escriba un programa que sume los números en un rango de valores positivos [a,b], donde siempre se cumple en la invocación a < b:
-;Por ejemplo "evaluar @sumaRango (2, 5) finEval  "  retornaría 14.
 
 ;declarar-recursivo (
 ;  @sumaRango(@rinf, @rsup) = Si (@rinf == @rsup) {
