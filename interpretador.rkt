@@ -88,7 +88,7 @@
     (expresion ("declarar" "(" (arbno identificador "=" expresion ";") ")" "{" expresion "}") variableLocal-exp)
     (expresion ("procedimiento" "(" (separated-list identificador ",") ")" "{" expresion "}") procedimiento-exp)
     (expresion ("evaluar" expresion "(" (separated-list expresion ",") ")" "finEval") app-exp)
-    (expresion ("declarar-recursivo" (arbno identificador "(" (separated-list identificador ",") ")" "=" expresion)  "{" expresion "}") variableRecursivo-exp)
+    (expresion ("declarar-recursivo" "(" (arbno identificador "(" (separated-list identificador ",") ")" "=" expresion ";") ")" "{" expresion "}") variableRecursivo-exp)
 
     ;;Primitiva Binaria
 
@@ -199,10 +199,10 @@
                            (args (eval-rands exps env)))
                        (if (procval? proc)
                            (apply-procedure proc args)
-                           (eopl:error 'eval-expression
+                           (eopl:error 'evaluar-expresion
                                        "Attempt to apply non-procedure ~s" proc))))
       (variableRecursivo-exp (proc-names idss bodies cuerpo)
-        (evaluar-procedimiento cuerpo
+        (evaluar-expresion cuerpo
                    (extend-env-recursively proc-names idss bodies env)))
      )
    )
@@ -300,60 +300,26 @@
   (empty-env-record)
   (extended-env-record (syms (list-of symbol?))
                        (vals (list-of scheme-value?))
-                       (env ambiente?)
-  )
+                       (env ambiente?))
   (recursively-extended-env-record (proc-names (list-of symbol?))
                                    (idss (list-of (list-of symbol?)))
                                    (bodies (list-of expresion?))
-                                   (env ambiente?)
-  )
-)
+                                   (env ambiente?)))
 
-;;Predicado para representar cualquier valor.
 (define scheme-value? (lambda (v) #t))
 
-;empty-env: <> -> enviroment
+;empty-env:      -> enviroment
 ;función que crea un ambiente vacío
-(define empty-env  
-  (lambda () (empty-env-record))) ;llamado al constructor de ambiente vacío
+(define empty-env
+  (lambda ()
+    (empty-env-record)))       ;llamado al constructor de ambiente vacío
 
 
 ;extend-env: <list-of symbols> <list-of numbers> enviroment -> enviroment
 ;función que crea un ambiente extendido
 (define extend-env
   (lambda (syms vals env)
-    (extended-env-record syms vals env)
-   )
- ) 
-
-;buscar-variable: <ambiente><identificador> -> <scheme-value>
-;proposito: función que busca un símbolo en un ambiente y devuelve lo que este almacenado.
-(define buscar-variable
-  (lambda (env id)
-    (cases environment env
-      (empty-env-record () (eopl:error "Error, la variable no existe"))
-      (extended-env-record (ids vals env)
-                           (let(
-                                 (pos (list-find-position id ids))
-                                )                             
-                               (
-                                if (number? pos)
-                                     (list-ref vals pos)
-                                     (buscar-variable env id)
-                                )
-                           )
-      )
-      (recursively-extended-env-record (proc-names idss bodies old-env)
-                                       (let ((pos (list-find-position id proc-names)))
-                                         (if (number? pos)
-                                             (cerradura (list-ref idss pos)
-                                                      (list-ref bodies pos)
-                                                      env)
-                                             (buscar-variable old-env id)))
-      )
-    )
-  )
-)
+    (extended-env-record syms vals env)))
 
 ;extend-env-recursively: <list-of symbols> <list-of <list-of symbols>> <list-of expressions> environment -> environment
 ;función que crea un ambiente extendido para procedimientos recursivos
@@ -361,6 +327,27 @@
   (lambda (proc-names idss bodies old-env)
     (recursively-extended-env-record
      proc-names idss bodies old-env)))
+
+
+;función que busca un símbolo en un ambiente
+(define buscar-variable
+  (lambda (env sym)
+    (cases environment env
+      (empty-env-record ()
+                        (eopl:error 'empty-env "No binding for ~s" sym))
+      (extended-env-record (syms vals old-env)
+                           (let ((pos (list-find-position sym syms)))
+                             (if (number? pos)
+                                 (list-ref vals pos)
+                                 (buscar-variable old-env sym))))
+      (recursively-extended-env-record (proc-names idss bodies old-env)
+                                       (let ((pos (list-find-position sym proc-names)))
+                                         (if (number? pos)
+                                             (cerradura (list-ref idss pos)
+                                                      (list-ref bodies pos)
+                                                      env)
+                                             (buscar-variable old-env sym)))))))
+
 
 ;****************************************************************************************
 ;Funciones Auxiliares
@@ -392,3 +379,37 @@
 ;****************************************************************************************
 ;Llamado al interpretador
 (interpretador)
+
+;****************************************************************************************
+;Ejercicio a)
+;Escriba un programa en su lenguaje de programación que contenga un procedimiento @sumarDigitos que le permita sumar los dígitos de un número entero positivo.
+;evaluar @sumarDigitos(147) finEval deberá retornar 12
+
+
+;****************************************************************************************
+;Ejericio b)
+;Escriba un programa en su lenguaje de programación que contenga un procedimiento que permita calcular el factorial de un número n.
+;Como la gramática para funciones recursivas debe ser propuesta por el grupo, incluya dos ejemplos de uso para el factorial de 5 y el factorial de 10.
+
+;****************************************************************************************
+;Ejercicio c)
+;Escriba un programa en su lenguaje de programación que contenga un procedimiento que permita calcular una potencia de forma recursiva @potencia(base, exponente).
+;Si no se evidencia el uso de recursión, el ejercicio no será valido. Incluya un llamado a la función recursiva: "evaluar @potencia (4, 2) finEval " que retornaría 16.
+
+;****************************************************************************************
+;Ejercicio d)
+;Escriba un programa que sume los números en un rango de valores positivos [a,b], donde siempre se cumple en la invocación a < b:
+;Por ejemplo "evaluar @sumaRango (2, 5) finEval  "  retornaría 14.
+
+;****************************************************************************************
+;Ejercicio e)
+;En python se puede utilizar algo que se llaman decoradores (por favor leer aquí).
+;Crea una función @integrantes que muestre los nombres de los integrantes del grupo y adicionalmente crea un decorador que al invocarlo salude a los integrantes
+
+;****************************************************************************************
+;Ejercicio e)
+;Modifique el ejercicio anterior para que el decorador reciba como parámetro otro mensaje que debe ponerse al final de la cadena de saludo.
+
+;****************************************************************************************
+
+
