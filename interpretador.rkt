@@ -20,6 +20,9 @@
 ;;                  ::= <primitiva-unaria>(<expresion>)
 ;;                      <primapp-un-exp (prim-unaria exp)>
 ;;
+;;                  ::= Si <expresion> "{" <expresion> "}" "sino" "{" <expresion> "}"
+;;                      <condicional-exp (test-exp true-exp false-exp)>
+;;
 ;;  <primitiva-binaria>   ::= + (primitiva-suma)
 ;;                        ::= ~ (primitiva-resta)
 ;;                        ::= / (primitiva-div)
@@ -67,6 +70,8 @@
     (expresion (texto) texto-lit)
     (expresion ("("expresion primitiva-binaria expresion")") primapp-bin-exp)
     (expresion (primitiva-unaria "(" expresion ")") primapp-un-exp)
+    (expresion ("Si" expresion "{" expresion "}" "sino" "{" expresion "}") condicional-exp)
+
 
     ;;Primitiva Binaria
 
@@ -162,6 +167,10 @@
                        (evaluar-primitiva-bin  exp1 prim-binaria exp2 env))
       (primapp-un-exp (prim-unaria exp)
                       (evaluar-primitiva-un prim-unaria exp env))
+      (condicional-exp (test-exp true-exp false-exp)
+                       (if (eqv? (valor-verdad? (evaluar-expresion test-exp env)) 1)
+                           (evaluar-expresion true-exp env)
+                           (evaluar-expresion false-exp env)))
      )
    )
 )
