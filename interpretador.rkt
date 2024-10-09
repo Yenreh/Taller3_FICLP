@@ -422,8 +422,15 @@
 
 ;****************************************************************************************
 ;Ejercicio c)
-;Escriba un programa en su lenguaje de programación que contenga un procedimiento que permita calcular una potencia de forma recursiva @potencia(base, exponente).
-;Si no se evidencia el uso de recursión, el ejercicio no será valido. Incluya un llamado a la función recursiva: "evaluar @potencia (4, 2) finEval " que retornaría 16.
+;declarar-recursivo (
+;  @potencia(@b, @e) = Si (@e == 0) {
+;    1
+;  } sino {
+;    (@b * evaluar @potencia(@b,(@e ~ 1)) finEval)
+;  };
+;) {
+;evaluar @potencia(4,2) finEval
+;}
 
 ;****************************************************************************************
 ;Ejercicio d)
