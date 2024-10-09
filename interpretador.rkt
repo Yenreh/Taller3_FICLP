@@ -1,5 +1,7 @@
 #lang eopl
 ;******************************************************************************************
+;Integrantes: Herney Eduardo Quintero Trochez  - 1528556
+;******************************************************************************************
 ;; La definición BNF para las expresiones del lenguaje:
 ;;
 ;;  <programa>      ::= <expresion>
