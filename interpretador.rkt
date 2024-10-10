@@ -474,7 +474,7 @@
 ;  }
 
 ;****************************************************************************************
-;Ejercicio e)
+;Ejercicio f)
 ;ACLARACION: Segun la gramatica el texto inicia con una o mas letras seguidos de numeros o guion bajo
 ;"<texto>: Debe definirse para cualquier texto escrito en racket. Un texto en
   ;este lenguaje son palabras que inician con una o más letras, seguidos de
