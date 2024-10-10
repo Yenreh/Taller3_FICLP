@@ -9,7 +9,7 @@
 ### 1. Compilar y ejecutar el intepretador
 
 ```bash
- sh compile.sh
+ sh run.sh
 ```
 
 ### 2. Solo ejecutar el intepretador
