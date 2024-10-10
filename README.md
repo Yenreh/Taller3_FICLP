@@ -5,7 +5,7 @@
 - Curso: FUNDAMENTOS DE INTERPRETACIÓN Y COMPILACIÓN DE LENGUAJES DE PROGRAMACIÓN
 - Profesor: Robinson Duque
 - Estudiantes:
-    - Herney Eduardo Quintero Trochez (1528556
+    - Herney Eduardo Quintero Trochez (1528556)
 ### 1. Compilar y ejecutar el intepretador
 
 ```bash
