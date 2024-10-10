@@ -61,7 +61,10 @@
   (espacios   (whitespace) skip)
   (comentario     ("%" (arbno (not #\newline))) skip)
   (identificador  ("@" letter (arbno (or letter digit))) symbol)
-  (texto        ("\"" letter (arbno (or letter digit "_")) "\"") string)
+  ;Definicion de texto original
+;  (texto        ("\"" letter (arbno (or letter digit "_")) "\"") string)
+  ;Definicion de texto con cambio para permitir los ejercicios e) y f)
+  (texto        ("\"" (arbno (or letter digit "_" ":")) "\"") string)
   (numero       (digit (arbno digit)) number)
   (numero       ("-" digit (arbno digit)) number)
   (numero       (digit (arbno digit) "." digit (arbno digit)) number)
@@ -447,18 +450,21 @@
 
 ;****************************************************************************************
 ;Ejercicio e)
-;ACLARACION: Aqui no incluyo el : del "Hola:" ya que se definio esto en la especificacion de la gramatica
+;ACLARACION: Segun la gramatica el texto inicia con una o mas letras seguidos de numeros o guion bajo
 ;"<texto>: Debe definirse para cualquier texto escrito en racket. Un texto en
   ;este lenguaje son palabras que inician con una o más letras, seguidos de
   ;posibles números o el guión bajo para separar palabras "_". Defina el texto
   ;en la especificación léxica sin las comillas y posteriormente escape las
   ;comillas en la gramática como se muestra arriba.
 
-;Por lo que los dos puntos no se incluyen en la definicion del texto
+;Por lo que para cumplir con la especificacion se deberia cambiar la gramatica de la siguiente manera, ya que
+; "Hola:" no es un texto valido segun la gramatica inicial
+
+;  (texto ("\"" letter (arbno (or letter digit "_" ":")) "\"") string)
 
 ; declarar (
 ;    @integrantes = procedimiento () { "Herney_el_solitario" };
-;    @saludar = procedimiento (@procedimiento) { procedimiento () { ("Hola_" concat evaluar @procedimiento() finEval) } };
+;    @saludar = procedimiento (@procedimiento) { procedimiento () { ("Hola:" concat evaluar @procedimiento() finEval) } };
 ;  ) {
 ;  declarar(
 ;    @decorate = evaluar @saludar(@integrantes) finEval;
@@ -469,9 +475,18 @@
 
 ;****************************************************************************************
 ;Ejercicio e)
+;ACLARACION: Segun la gramatica el texto inicia con una o mas letras seguidos de numeros o guion bajo
+;"<texto>: Debe definirse para cualquier texto escrito en racket. Un texto en
+  ;este lenguaje son palabras que inician con una o más letras, seguidos de
+  ;posibles números o el guión bajo para separar palabras "_". Defina el texto
+  ;en la especificación léxica sin las comillas y posteriormente escape las
+  ;comillas en la gramática como se muestra arriba.
 
-;Deberá retornar "Hola_Robinson_y_Sara_ProfesoresFLP"
-;
+;Por lo que para cumplir con el requerimiento se deberia cambiar la gramatica para que permita "_" en cualquier parte del texto
+;de esta manera, ya que "_ProfesoresFLP" no es un texto valido segun la gramatica inicial
+
+;(texto ("\"" (arbno (or letter digit "_")) "\"") string)
+
 
 ;  declarar (
 ;    @integrantes = procedimiento () { "Herney_el_solitario" };
@@ -481,7 +496,7 @@
 ;    @decorate(@mensaje) = (evaluar evaluar @saludar(@integrantes) finEval () finEval  concat @mensaje) ;
 ;  )
 ;  {
-;    evaluar @decorate("ProfesoresFLP") finEval }
+;    evaluar @decorate("_ProfesoresFLP") finEval }
 ;  }
 
 ;****************************************************************************************
