@@ -3,7 +3,7 @@
 
 - Univalle
 - Curso: FUNDAMENTOS DE INTERPRETACIÓN Y COMPILACIÓN DE LENGUAJES DE PROGRAMACIÓN
-- Profesor: JRobinson Duque
+- Profesor: Robinson Duque
 - Estudiantes:
     - Herney Eduardo Quintero Trochez (1528556
 ### 1. Compilar y ejecutar el intepretador
