@@ -1,1 +1,19 @@
 
+##  Profiling en Python y C con instrucciones AVX
+
+- Univalle
+- Curso: FUNDAMENTOS DE INTERPRETACIÓN Y COMPILACIÓN DE LENGUAJES DE PROGRAMACIÓN
+- Profesor: JRobinson Duque
+- Estudiantes:
+    - Herney Eduardo Quintero Trochez (1528556
+### 1. Compilar y ejecutar el intepretador
+
+```bash
+ sh compile.sh
+```
+
+### 2. Solo ejecutar el intepretador
+
+```bash
+ sh only_run.sh
+```
