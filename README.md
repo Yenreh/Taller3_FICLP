@@ -1,5 +1,5 @@
 
-##  Profiling en Python y C con instrucciones AVX
+##  Taller 3
 
 - Univalle
 - Curso: FUNDAMENTOS DE INTERPRETACIÓN Y COMPILACIÓN DE LENGUAJES DE PROGRAMACIÓN
